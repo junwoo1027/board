@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name>board3</display-name>
+
+
+	<servlet>
+		<servlet-name>DBCPInit</servlet-name>
+		<servlet-class>kr.s2b.jdbc.connection.DBCPInit</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ControllerUsingURI</servlet-name>
+		<servlet-class>mvc.controller.ControllerUsingURI</servlet-class>
+		<init-param>
+			<param-name>configFile</param-name>
+			<param-value>
+				/WEB-INF/commandHandlerURI.properties
+			</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ControllerUsingURI</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+	<filter>
+		<filter-name>encoding</filter-name>
+		<filter-class>kr.filter.EncodingFilter</filter-class>
+		<init-param>
+			<param-name>characterEncodnig</param-name>
+			<param-value>utf8</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>LoginCheck</filter-name>
+		<filter-class>kr.filter.LoginCheckFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>LoginCheck</filter-name>
+		<url-pattern>/changePwd.do</url-pattern>
+		<url-pattern>/write.do</url-pattern>
+		<url-pattern>/modify.do</url-pattern>
+		<url-pattern>/delete.do</url-pattern>
+		<url-pattern>/comment.do</url-pattern>
+	</filter-mapping>
+</web-app>
