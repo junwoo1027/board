@@ -32,7 +32,7 @@
 	<td colspan="2">
 		<c:set var="pageNo" value="${empty param.pageNo ? '1' : param.pageNo}" />
 		<a href="list.do?pageNo=${pageNo}">[목록]</a>
-		<a href="comment.do?no=${articleData.article.number}">[댓글]</a>
+		<a href="commentlist.do?no=${articleData.article.number}">[댓글]</a>
 		<c:if test="${authUser.id == articleData.article.writer.id}">
 		<a href="modify.do?no=${articleData.article.number}">[게시글수정]</a>
 		<a href="delete.do?no=${articleData.article.number}">[게시글삭제]</a>
@@ -41,5 +41,23 @@
 </tr>
 </table>
 
+<br><br>
+<table border="1">
+	<tr>
+		<td>아이디</td>
+		<td>내용</td>
+	</tr>
+	
+<c:forEach var="comment" items="${commentPage.content}">
+	<tr>
+		<td>${comment.writer.id}</td>
+		<td>${comment.content}</td>
+	</tr>
+	<tr>
+		
+	</tr>
+</c:forEach>
+
+</table>
 </body>
 </html>

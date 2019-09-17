@@ -46,16 +46,19 @@ public class WriteCommentHandler implements CommandHandler{
 		}
 	}
 	
-	private String processSubmit(HttpServletRequest req, HttpServletResponse res) {
+	private String processSubmit(HttpServletRequest req, HttpServletResponse res) throws IOException{
 		Map<String, Boolean> errors = new HashMap<>();
 		req.setAttribute("errors", errors);
 		
 		User user = (User)req.getSession(false).getAttribute("authUser");
+//		System.out.println(user);
+		String noVal = req.getParameter("no");
+		int no = Integer.parseInt(noVal);
 		
-//		String noVal = req.getParameter("no");
-//		int no = Integer.parseInt(noVal);
-		
-		CommentRequest comReq = createCommentRequest(user, req);
+//		CommentRequest comReq = createCommentRequest(user, req);
+		CommentRequest comReq = new CommentRequest(new Writer(user.getId(), user.getName()),
+				req.getParameter("content"), no);
+		req.setAttribute("comReq", comReq);
 		comReq.validate(errors);
 //		System.out.println(req.getParameter("content"));
 		
@@ -63,21 +66,29 @@ public class WriteCommentHandler implements CommandHandler{
 			return FORM_VIEW;
 		}
 		
-		int newComment = writeCommentService.write(comReq);
-		req.setAttribute("newComment", newComment);
-		
-		return "/WEB-INF/view/newCommentSuccess.jsp";
-		
-	}
-	
-	private CommentRequest createCommentRequest(User user, HttpServletRequest req) {
-		String noVal = req.getParameter("no");
-		int no = Integer.parseInt(noVal);
-		System.out.println(req.getParameter("no"));
-		System.out.println(req.getParameter("content"));
-		return new CommentRequest(
-				new Writer(user.getId(), user.getName()),
-				req.getParameter("content"),
-				no);
+//		int newComment = writeCommentService.write(comReq);
+//		req.setAttribute("newComment", newComment);
+//		
+//		return "/WEB-INF/view/newCommentSuccess.jsp";
+		try {
+			writeCommentService.write(comReq);
+			return "/WEB-INF/view/newCommentSuccess.jsp";
+		}catch(ArticleNotFoundException e) {
+			res.sendError(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
 	}
 }
+		
+	
+//	private CommentRequest createCommentRequest(User user, HttpServletRequest req) {
+//		String noVal = req.getParameter("no");
+//		int no = Integer.parseInt(noVal);
+//		System.out.println(req.getParameter("no"));
+//		System.out.println(req.getParameter("content"));
+//		return new CommentRequest(
+//				new Writer(user.getId(), user.getName()),
+//				req.getParameter("content"),
+//				no);
+//	}
+//}

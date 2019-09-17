@@ -2,8 +2,8 @@ package kr.article.model;
 
 public class Comment {
 
-	private Integer number;
 	private Integer comNum;
+	private Integer number;
 	private Writer writer;
 	private String content;
 	

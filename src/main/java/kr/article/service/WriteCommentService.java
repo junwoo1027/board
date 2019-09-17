@@ -52,6 +52,6 @@ public class WriteCommentService {
 	}
 	
 	private Comment toComment(CommentRequest comReq) {
-		return new Comment(null, null, comReq.getWriter(), comReq.getContent());
+		return new Comment(null, comReq.getArticleNumber(), comReq.getWriter(), comReq.getContent());
 	}
 }
