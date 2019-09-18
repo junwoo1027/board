@@ -11,6 +11,16 @@ public class CommentPage {
 	private int totalPages;
 	private int startPage;
 	private int endPage;
+	private int no;
+	
+	public CommentPage(List<Comment> content, int no) {
+		this.content=content;
+		this.no=no;
+	}
+	
+	public CommentPage(int no) {
+		this.no=no;
+	}
 
 	
 	public CommentPage(int total, int currentPage,int size, List<Comment> content) {

@@ -43,18 +43,11 @@
 
 <br><br>
 <table border="1">
+
+<c:forEach var="comment" items="${commentPage.no}">
 	<tr>
-		<td>아이디</td>
-		<td>내용</td>
-	</tr>
-	
-<c:forEach var="comment" items="${commentPage.content}">
-	<tr>
-		<td>${comment.writer.id}</td>
-		<td>${comment.content}</td>
-	</tr>
-	<tr>
-		
+		<td>아이디:${comment.writer.id}</td>
+		<td>내용:${comment.content}</td>
 	</tr>
 </c:forEach>
 

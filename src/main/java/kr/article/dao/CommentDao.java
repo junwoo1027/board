@@ -54,16 +54,16 @@ public class CommentDao {
 		}
 	}
 	
-	public Comment selectById(Connection conn,  int no) throws SQLException{
+	public List<Comment> selectById(Connection conn,  int no) throws SQLException{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement("select * from comment where article_no = ? ");
 			pstmt.setInt(1, no);
 			rs=pstmt.executeQuery();
-			Comment comment =null;
-			if(rs.next()) {
-				comment = new Comment(rs.getInt("comment_no"), rs.getInt("article_no"), new Writer(rs.getString("writer_id"),rs.getString("writer_noame")), rs.getString("content"));
+			List<Comment> comment =new ArrayList<Comment>();
+			while(rs.next()) {
+				comment.add(convertComment(rs));
 			}
 			return comment;
 		}finally {
@@ -72,22 +72,22 @@ public class CommentDao {
 		}
 	}
 	
-	public int selectCount(Connection conn) throws SQLException{
-		Statement stmt = null;
-		ResultSet rs = null;
-		
-		try {
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select count(*) from comment");
-			if(rs.next()) {
-				return rs.getInt(1);
-			}
-			return 0;
-		}finally {
-			JDBCUtil.close(rs);
-			JDBCUtil.close(stmt);
-		}
-	}
+//	public int selectCount(Connection conn) throws SQLException{
+//		Statement stmt = null;
+//		ResultSet rs = null;
+//		
+//		try {
+//			stmt = conn.createStatement();
+//			rs = stmt.executeQuery("select count(*) from comment");
+//			if(rs.next()) {
+//				return rs.getInt(1);
+//			}
+//			return 0;
+//		}finally {
+//			JDBCUtil.close(rs);
+//			JDBCUtil.close(stmt);
+//		}
+//	}
 	
 //	public List<Comment> select(Connection conn, int startRow, int size) throws SQLException{
 //		PreparedStatement pstmt = null;
@@ -109,29 +109,29 @@ public class CommentDao {
 //		}
 //	}
 	
-	public List<Comment> select(Connection conn, int firstRow, int endRow) throws SQLException {
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			pstmt=conn.prepareStatement("select * from comment" +
-					"order by comment_no desc limit ?, ?");
-			pstmt.setInt(1, firstRow - 1);
-			pstmt.setInt(2, endRow - firstRow + 1);
-			rs=pstmt.executeQuery();
-			if(rs.next()) {
-				List<Comment> commentList = new ArrayList<Comment>();
-				while(rs.next()) {
-				commentList.add(convertComment(rs));
-				}
-				return commentList;
-			}else {
-				return Collections.emptyList();
-			}
-		}finally {
-			JDBCUtil.close(rs);
-			JDBCUtil.close(pstmt);
-		}
-	}
+//	public List<Comment> select(Connection conn, int firstRow, int endRow) throws SQLException {
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		try {
+//			pstmt=conn.prepareStatement("select * from comment" +
+//					"order by comment_no desc limit ?, ?");
+//			pstmt.setInt(1, firstRow - 1);
+//			pstmt.setInt(2, endRow - firstRow + 1);
+//			rs=pstmt.executeQuery();
+//			if(rs.next()) {
+//				List<Comment> commentList = new ArrayList<Comment>();
+//				while(rs.next()) {
+//				commentList.add(convertComment(rs));
+//				}
+//				return commentList;
+//			}else {
+//				return Collections.emptyList();
+//			}
+//		}finally {
+//			JDBCUtil.close(rs);
+//			JDBCUtil.close(pstmt);
+//		}
+//	}
 	
 	public Comment convertComment(ResultSet rs) throws SQLException{
 		return new Comment(rs.getInt("comment_no"),
