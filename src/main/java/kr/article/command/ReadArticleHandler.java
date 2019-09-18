@@ -1,8 +1,11 @@
 package kr.article.command;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.article.model.Comment;
 import kr.article.service.ArticleContentNotFoundException;
 import kr.article.service.ArticleData;
 import kr.article.service.ArticleNotFoundException;
@@ -15,6 +18,8 @@ public class ReadArticleHandler implements CommandHandler {
 
 	private ReadArticleService readService = new ReadArticleService();
 	private ListCommentService commentService = new ListCommentService();
+	
+	
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) 
 			throws Exception {
@@ -24,9 +29,11 @@ public class ReadArticleHandler implements CommandHandler {
 		try {
 			ArticleData articleData = readService.getArticle(articleNum, true);
 			req.setAttribute("articleData", articleData);
-			CommentPage commentlist = new CommentPage(articleNum);
-			commentlist = commentService.getCommentPage(articleNum);
-			req.setAttribute("comment", commentlist);
+//			CommentPage commentlist = new CommentPage(articleNum);
+//			commentlist = commentService.getCommentPage(articleNum);
+			List<Comment> comment = commentService.getCommentPage(articleNum);
+//			System.out.println(comments);
+			req.setAttribute("comment", comment);
 			return "/WEB-INF/view/readArticle.jsp";
 		} catch (ArticleNotFoundException | ArticleContentNotFoundException e) {
 			req.getServletContext().log("no article", e);

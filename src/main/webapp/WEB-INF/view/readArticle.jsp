@@ -32,7 +32,6 @@
 	<td colspan="2">
 		<c:set var="pageNo" value="${empty param.pageNo ? '1' : param.pageNo}" />
 		<a href="list.do?pageNo=${pageNo}">[목록]</a>
-		<a href="commentlist.do?no=${articleData.article.number}">[댓글]</a>
 		<c:if test="${authUser.id == articleData.article.writer.id}">
 		<a href="modify.do?no=${articleData.article.number}">[게시글수정]</a>
 		<a href="delete.do?no=${articleData.article.number}">[게시글삭제]</a>
@@ -42,15 +41,31 @@
 </table>
 
 <br><br>
+<h3>댓글</h3>
 <table border="1">
 
-<c:forEach var="comment" items="${commentPage.no}">
+<c:forEach var="comment" items="${comment}">
 	<tr>
 		<td>아이디:${comment.writer.id}</td>
-		<td>내용:${comment.content}</td>
+		<td>내용:${comment.content}
+		<c:if test="${authUser.id == comment.writer.id}">
+<%--		<a href="#">수정</a>--%>
+		<a href="delComment.do?no=${comment.comNum}">삭제</a>
+		</c:if>
+		</td>
 	</tr>
 </c:forEach>
-
 </table>
+<form action="comment.do" method="post">
+<input type="hidden" name="no" value="${articleData.article.number}">
+<p>
+	내용:<br>
+	<input type="text" name="content" value="${param.content}">
+	<c:if test="${errors.content}">댓글을 입력하세요.</c:if>
+<input type="submit" value="댓글 등록">
+</p>
+</form>
 </body>
+
+
 </html>

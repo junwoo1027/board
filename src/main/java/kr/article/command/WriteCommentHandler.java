@@ -16,7 +16,7 @@ import mvc.command.CommandHandler;
 
 public class WriteCommentHandler implements CommandHandler{
 
-	private static final String FORM_VIEW ="/WEB-INF/view/newCommentForm.jsp";
+	private static final String FORM_VIEW ="/WEB-INF/view/readArticle.jsp";
 	private WriteCommentService writeCommentService = new WriteCommentService();
 	
 	@Override
@@ -32,18 +32,18 @@ public class WriteCommentHandler implements CommandHandler{
 	}
 	
 	private String processForm(HttpServletRequest req, HttpServletResponse res) throws IOException{
-		try {
-			String noVal = req.getParameter("no");
-			int no = Integer.parseInt(noVal);
-			
-			CommentRequest comReq = new CommentRequest(no);
-			
-			req.setAttribute("comReq", comReq);
+//		try {
+//			String noVal = req.getParameter("no");
+//			int no = Integer.parseInt(noVal);
+//			
+//			CommentRequest comReq = new CommentRequest(no);
+//			
+//			req.setAttribute("comReq", comReq);
 			return FORM_VIEW;
-		}catch(ArticleNotFoundException e) {
-			res.sendError(HttpServletResponse.SC_NOT_FOUND);
-			return null;
-		}
+//		}catch(ArticleNotFoundException e) {
+//			res.sendError(HttpServletResponse.SC_NOT_FOUND);
+//			return null;
+//		}
 	}
 	
 	private String processSubmit(HttpServletRequest req, HttpServletResponse res) throws IOException{

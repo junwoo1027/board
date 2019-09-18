@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시글 삭제</title>
 </head>
 <body>
-hello
+댓글을 삭제했습니다.
+<br>
+${ctxPath = pageContext.request.contextPath; ''}
+<a href="${ctxPath}/list.do">[글보기]</a>
 </body>
 </html>

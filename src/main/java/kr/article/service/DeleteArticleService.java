@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import kr.article.dao.ArticleContentDao;
 import kr.article.dao.ArticleDao;
+import kr.article.dao.CommentDao;
 import kr.article.model.Article;
 import kr.s2b.jdbc.connection.JDBCUtil;
 import kr.s2b.jdbc.connection.ConnectionProvider;
@@ -13,7 +14,7 @@ public class DeleteArticleService {
 
 	private ArticleDao articleDao = new ArticleDao();
 	private ArticleContentDao contentDao = new ArticleContentDao();
-
+	private CommentDao commentDao = new CommentDao();
 	public void delete(DeleteRequest delReq) {
 		Connection conn = null;
 		try {
@@ -32,6 +33,7 @@ public class DeleteArticleService {
 					delReq.getArticleNum());
 			contentDao.delete(conn, 
 					delReq.getArticleNum());
+			commentDao.delete(conn, delReq.getArticleNum());
 			conn.commit();
 		} catch (SQLException e) {
 			JDBCUtil.rollback(conn);

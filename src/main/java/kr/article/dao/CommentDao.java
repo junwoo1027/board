@@ -64,7 +64,8 @@ public class CommentDao {
 			List<Comment> comment =new ArrayList<Comment>();
 			while(rs.next()) {
 				comment.add(convertComment(rs));
-			}
+			}	
+			
 			return comment;
 		}finally {
 			JDBCUtil.close(rs);
@@ -72,66 +73,23 @@ public class CommentDao {
 		}
 	}
 	
-//	public int selectCount(Connection conn) throws SQLException{
-//		Statement stmt = null;
-//		ResultSet rs = null;
-//		
-//		try {
-//			stmt = conn.createStatement();
-//			rs = stmt.executeQuery("select count(*) from comment");
-//			if(rs.next()) {
-//				return rs.getInt(1);
-//			}
-//			return 0;
-//		}finally {
-//			JDBCUtil.close(rs);
-//			JDBCUtil.close(stmt);
-//		}
-//	}
-	
-//	public List<Comment> select(Connection conn, int startRow, int size) throws SQLException{
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		try {
-//			pstmt = conn.prepareStatement("select * from comment" +
-//					"order by comment_no desc limit ?, ?");
-//			pstmt.setInt(1, startRow);
-//			pstmt.setInt(2, size);
-//			rs = pstmt.executeQuery();
-//			List<Comment> result = new ArrayList<>();
-//			while(rs.next()) {
-//				result.add(convertComment(rs));
-//			}
-//			return result;
-//		}finally {
-//			JDBCUtil.close(rs);
-//			JDBCUtil.close(pstmt);
-//		}
-//	}
-	
-//	public List<Comment> select(Connection conn, int firstRow, int endRow) throws SQLException {
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		try {
-//			pstmt=conn.prepareStatement("select * from comment" +
-//					"order by comment_no desc limit ?, ?");
-//			pstmt.setInt(1, firstRow - 1);
-//			pstmt.setInt(2, endRow - firstRow + 1);
-//			rs=pstmt.executeQuery();
-//			if(rs.next()) {
-//				List<Comment> commentList = new ArrayList<Comment>();
-//				while(rs.next()) {
-//				commentList.add(convertComment(rs));
-//				}
-//				return commentList;
-//			}else {
-//				return Collections.emptyList();
-//			}
-//		}finally {
-//			JDBCUtil.close(rs);
-//			JDBCUtil.close(pstmt);
-//		}
-//	}
+	public Comment select(Connection conn,  int no) throws SQLException{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select * from comment where article_no = ? ");
+			pstmt.setInt(1, no);
+			rs=pstmt.executeQuery();
+			Comment comment =null;
+			if(rs.next()) {
+				comment = convertComment(rs);
+			}				
+			return comment;
+		}finally {
+			JDBCUtil.close(rs);
+			JDBCUtil.close(pstmt);
+		}
+	}
 	
 	public Comment convertComment(ResultSet rs) throws SQLException{
 		return new Comment(rs.getInt("comment_no"),
@@ -144,4 +102,22 @@ public class CommentDao {
 //	private Timestamp toTimestamp(Date date) {
 //		return new Timestamp(date.getTime());
 //	}
+	
+	public int update(Connection conn, int no, String content) throws SQLException{
+		try(PreparedStatement pstmt = 
+				conn.prepareStatement("update comment set content = ?" + "where comment_no=?")){
+			pstmt.setString(1, content);
+			pstmt.setInt(2, no);
+			return pstmt.executeUpdate();
+		}
+	}
+	
+	public int delete(Connection conn, int no) throws SQLException{
+		try(PreparedStatement pstmt = conn.prepareStatement("delete from comment where article_no=?")){
+			pstmt.setInt(1, no);
+			return pstmt.executeUpdate();
+		}
+	}
+	
+	
 }

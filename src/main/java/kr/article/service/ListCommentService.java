@@ -13,15 +13,10 @@ public class ListCommentService {
 		private CommentDao commentDao = new CommentDao();
 //		private int size=3;
 		
-		public CommentPage getCommentPage(int no) {
+		public List<Comment> getCommentPage(int no) {
 			try (Connection conn = ConnectionProvider.getConnection()){
-//				int total = commentDao.selectCount(conn);
-				List<Comment> content = commentDao.selectById(conn, no);
-				if(content == null) {
-					throw new RuntimeException();
-				}
-//				return new CommentPage(total, pageNum, size, content);
-				return new CommentPage(content, no);
+				
+				return commentDao.selectById(conn, no);
 			}catch(SQLException e) {
 				throw new RuntimeException(e);
 			}

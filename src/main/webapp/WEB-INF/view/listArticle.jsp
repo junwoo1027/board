@@ -58,6 +58,8 @@
 	</tr>
 </c:if>
 </table>
+
+<%-- 
 <div>
 <form action="list.do" method="get">
 <select name="col">
@@ -70,5 +72,6 @@
 	<input type="submit" value="검색">
 </form>
 </div>
+--%>
 </body>
 </html>
