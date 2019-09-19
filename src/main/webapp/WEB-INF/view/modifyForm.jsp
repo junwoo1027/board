@@ -8,6 +8,7 @@
 <title>게시글 수정</title>
 </head>
 <body>
+<h3>게시글 수정</h3>
 <form action="modify.do" method="post">
 <input type="hidden" name="no" value="${modReq.articleNumber}">
 <p>

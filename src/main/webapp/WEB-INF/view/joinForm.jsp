@@ -9,6 +9,8 @@
 
 </head>
 <body>
+
+<h3>회원가입</h3>
 <form action="join.do" method="post">
 <p>
 	아이디:<br/><input type="text" id="id" name="id" value="${param.id}" placeholder="시작은 영문, 특수문자 제외, 5~12자" size=32>

@@ -8,6 +8,7 @@
 <title>게시글 쓰기</title>
 </head>
 <body>
+<h3>글작성</h3>
 <form action="write.do" method="post">
 <p>
 	제목:<br><input type="text" name="title" value="${param.title}">

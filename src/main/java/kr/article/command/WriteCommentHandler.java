@@ -59,11 +59,12 @@ public class WriteCommentHandler implements CommandHandler{
 		CommentRequest comReq = new CommentRequest(new Writer(user.getId(), user.getName()),
 				req.getParameter("content"), no);
 		req.setAttribute("comReq", comReq);
+		req.setAttribute("no", no);
 		comReq.validate(errors);
 //		System.out.println(req.getParameter("content"));
 		
 		if(!errors.isEmpty()) {
-			return FORM_VIEW;
+			return "/WEB-INF/view/test.jsp";
 		}
 		
 //		int newComment = writeCommentService.write(comReq);

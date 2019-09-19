@@ -7,9 +7,9 @@
 <title>게시글 삭제</title>
 </head>
 <body>
-댓글을 삭제했습니다.
-<br>
-${ctxPath = pageContext.request.contextPath; ''}
-<a href="${ctxPath}/list.do">[글보기]</a>
+<script>
+	alert('삭제완료');
+	window.location.href="${pageContext.request.contextPath}/read.do?no=${articleNum}"
+</script>
 </body>
 </html>

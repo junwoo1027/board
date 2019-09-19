@@ -9,10 +9,12 @@
 </head>
 <body>
 <c:if test="${! empty authUser}">
+	<div>
 	${authUser.name}님
 	<a href="logout.do">[로그아웃]</a>
 	<a href="changePwd.do">[비밀번호 변경]</a>
 	<a href="memDelete.do">[회원탈퇴]</a>
+	</div>
 </c:if>
 <br><br>
 <table border="1">

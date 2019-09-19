@@ -13,7 +13,7 @@ public class ListCommentService {
 		private CommentDao commentDao = new CommentDao();
 //		private int size=3;
 		
-		public List<Comment> getCommentPage(int no) {
+		public List<Comment> CommentPage(int no) {
 			try (Connection conn = ConnectionProvider.getConnection()){
 				
 				return commentDao.selectById(conn, no);

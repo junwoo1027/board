@@ -55,5 +55,6 @@
 		<url-pattern>/modify.do</url-pattern>
 		<url-pattern>/delete.do</url-pattern>
 		<url-pattern>/comment.do</url-pattern>
+		<url-pattern>/delComment.do</url-pattern>
 	</filter-mapping>
 </web-app>

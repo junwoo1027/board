@@ -77,7 +77,7 @@ public class CommentDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			pstmt = conn.prepareStatement("select * from comment where article_no = ? ");
+			pstmt = conn.prepareStatement("select * from comment where comment_no = ? ");
 			pstmt.setInt(1, no);
 			rs=pstmt.executeQuery();
 			Comment comment =null;
@@ -113,7 +113,7 @@ public class CommentDao {
 	}
 	
 	public int delete(Connection conn, int no) throws SQLException{
-		try(PreparedStatement pstmt = conn.prepareStatement("delete from comment where article_no=?")){
+		try(PreparedStatement pstmt = conn.prepareStatement("delete from comment where comment_no=?")){
 			pstmt.setInt(1, no);
 			return pstmt.executeUpdate();
 		}

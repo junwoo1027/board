@@ -50,22 +50,52 @@
 		<td>내용:${comment.content}
 		<c:if test="${authUser.id == comment.writer.id}">
 <%--		<a href="#">수정</a>--%>
-		<a href="delComment.do?no=${comment.comNum}">삭제</a>
+<%--		<a href="#" onclick="comDelete(${comment.comNum})">삭제</a>--%>
+		<a href="delComment.do?comNum=${comment.comNum}&no=${articleData.article.number}" onclick="return delcheck()">삭제</a>
 		</c:if>
 		</td>
 	</tr>
 </c:forEach>
 </table>
-<form action="comment.do" method="post">
+<form name="commentForm" action="comment.do" method="post">
 <input type="hidden" name="no" value="${articleData.article.number}">
 <p>
 	내용:<br>
 	<input type="text" name="content" value="${param.content}">
-	<c:if test="${errors.content}">댓글을 입력하세요.</c:if>
-<input type="submit" value="댓글 등록">
+<input type="submit" onclick="Comment()" value="댓글 등록">
 </p>
 </form>
 </body>
 
+<script type="text/javascript">
+<%--function comDelete(comNum){
+	var msg=confirm("댓글삭제");
+	if(msg==true){
+		deleteCom(comNum);
+	}else{
+		return false;
+	}
+}--%>
+
+function delcheck(){
+	return confrim("삭제");
+}
+
+function writeCom(){
+	return confirm("쓰기");
+}
+
+function Comment(){
+	var commentForm = document.commentForm;
+	var content=commentForm.content.value;
+	
+	if(!content){
+		alert("댓글을 입력하세요.");
+	}else{
+		commentForm.submit();
+	}
+}
+
+</script>
 
 </html>

@@ -9,6 +9,7 @@
 <title>비밀번호 변경</title>
 </head>
 <body>
+<h3>비밀번호 변경</h3>
 <form action="changePwd.do" method="post">
 <p>
 	현재 비밀번호:<br><input type="password" name="curPwd">
